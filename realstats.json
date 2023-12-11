@@ -1,17 +1,5 @@
 [
-    {
-        "Label1": 10,
-        "Label2": 20,
-        "Label3": 15
-    },
-    {
-        "Label1": 15,
-        "Label2": 25,
-        "Label3": 20
-    },
-    {
-        "Label1": 5,
-        "Label2": 15,
-        "Label3": 10
-    }
+    {"Label": "January", "Value": 10},
+    {"Label": "February", "Value": 20},
+    {"Label": "March", "Value": 15},
 ]
