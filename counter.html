@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Odometer Counter</title>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include odometer.min.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.8/odometer.min.js"></script>
+    <!-- Include odometer styles (you may customize these styles) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.8/themes/odometer-theme-default.min.css" />
+    <style>
+        /* Center the counter vertically and horizontally */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Style for the odometer container */
+        #odometer {
+            width: 1000000px;
+            text-align: center;
+            font-size: 64px; /* You can adjust the font size as needed */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Odometer Counter Element -->
+<div id="odometer" class="odometer"></div>
+
+<script>
+    // Variables to store the old and new numbers
+    let oldNumber = 0;
+
+    // Function to generate a random number within a given range
+    function getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Function to update the odometer with a random number based on specified ranges
+    function updateOdometer() {
+        // Generate a random number from 1 to 1000
+        let randomNumber = getRandomNumber(1, 1000);
+
+        // Determine whether the number should grow positive, negative, or at a large rate
+        if (randomNumber <= 900) {
+            // 1-800: Grow positive
+            randomNumber = getRandomNumber(1, 10);
+        } else if (randomNumber <= 999) {
+            // 801-999: Grow negative
+            randomNumber = -getRandomNumber(1, 2);
+        } else {
+            // 1000: Grow at a large rate
+            randomNumber = getRandomNumber(100, 1000);
+        }
+
+        // Add the old number to the newly generated random number
+        let newNumber = oldNumber + randomNumber;
+
+        // Round to the nearest whole number
+        newNumber = Math.round(newNumber);
+
+        // Update the odometer with the new number
+        const odometerElement = document.getElementById('odometer');
+        const odometer = new Odometer({
+            el: odometerElement,
+            value: 0, // Initial value (starting from 0)
+            format: '(,ddd)', // You can customize the format as needed
+        });
+        odometer.update(newNumber);
+
+        // Set the new number as the old number for the next iteration
+        oldNumber = newNumber;
+    }
+
+    // Update the odometer initially and then every second
+    updateOdometer(); // Initial update
+    setInterval(updateOdometer, 1000); // Update every second
+</script>
+
+</body>
+</html>
